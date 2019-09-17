@@ -111,7 +111,7 @@ for i in function1:
     filtered_data = df[isfunction1_identity]
     # filtered_data.to_csv('csv/'+i.__name__+'_availability.csv')
     plt.figure(figsize=(20, 10))
-    plt.suptitle('Maximum availability class(fixing {}) for HW classes {} and SW classes {}'.format(i.__name__, availabilityClassHW, availabilityClassSW), fontsize=16)
+    plt.suptitle('Minimum availability class(fixing {}) for HW classes {} and SW classes {}'.format(i.__name__, availabilityClassHW, availabilityClassSW), fontsize=16)
     subplot_iteration = 0
     for j in function2:
         subplot_iteration += 1
@@ -121,16 +121,16 @@ for i in function1:
         plt.subplot(2, 3, subplot_iteration)
         plt.title(i.__name__ + ' and ' + j.__name__)
         plt.xlabel('Nodes count')
-        plt.ylabel('maximum overall availability class')
+        plt.ylabel('minimum overall availability class')
         for k in nodes_count:
             # filtering the data by specific number of nodes count
             isNodes_count = function2_filtered['nodes count'] == k
             nodes_count_filtered = function2_filtered[isNodes_count]
             # finding the maximum overall availability class from the filtered data.
             # filtered by specific f1,f2, and node_count
-            maxAvailabilityClass = nodes_count_filtered['Overall availability'].max()
-            print(k, maxAvailabilityClass)
-            plt.plot(k, maxAvailabilityClass, 'bo')
-    plt.savefig('maxPlots/'+i.__name__)
+            minAvailabilityClass = nodes_count_filtered['Overall availability'].min()
+            print(k, minAvailabilityClass)
+            plt.plot(k, minAvailabilityClass, 'bo')
+    plt.savefig('minPlots/'+i.__name__)
 # plt.tight_layout()
-plt.show()
+#plt.show()
