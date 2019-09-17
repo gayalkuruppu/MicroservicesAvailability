@@ -38,7 +38,7 @@ def f1_n_pow_2over3(x):
 
 
 def f1_identity(x):
-    return(x)
+    return(1)
 
 # functions to mean time to recover
 
@@ -121,7 +121,7 @@ for i in function1:
         plt.subplot(2, 3, subplot_iteration)
         plt.title(i.__name__ + ' and ' + j.__name__)
         plt.xlabel('Nodes count')
-        plt.ylabel('minimum overall availability class')
+        plt.ylabel('maximum overall availability class')
         for k in nodes_count:
             # filtering the data by specific number of nodes count
             isNodes_count = function2_filtered['nodes count'] == k
