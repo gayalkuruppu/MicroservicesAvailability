@@ -1,4 +1,5 @@
 from avail import availability
+from avail import rf_to_avail
 import pandas as pd
 import math
 
@@ -39,12 +40,12 @@ for o in overall_availability_class:
             for f in f1_over_f2:
                 overall_availability = availability(o)
                 r_f_ratio = f(n)*(availability(a)/pow(overall_availability, 1/n)-1)
-                data.append([o, n, a, f.__name__, r_f_ratio])
+                data.append([o, n, a, f.__name__, r_f_ratio, rf_to_avail(r_f_ratio)])
 
-df = pd.DataFrame(data, columns=['overall availability class', 'nodes count', 'f1(n) / f2(n)', 'availability class HW',
-                                 'recover/failure time ratio'])
+df = pd.DataFrame(data, columns=['overall availability class', 'nodes count', 'availability class HW', 'f1(n) / f2(n)',
+                                 'minimum recover/failure time ratio', 'minimum availability class SW required'])
 
-isMinPositive = df['recover/failure time ratio'] >= 0
+isMinPositive = df['minimum recover/failure time ratio'] >= 0
 positiveRatioFiltered = df[isMinPositive]
 
 df.to_csv('csv/allCombinations.csv')
