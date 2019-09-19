@@ -30,8 +30,8 @@ def n_squared_log_n_squared(x):
 
 data = []
 overall_availability_class = [4, 5, 6]
-nodes_count = [2, 4, 8, 16, 32, 64, 128]
-availability_class_hw = [4, 5]
+nodes_count = list(range(2, 128))
+availability_class_hw = [4, 5, 6]
 f1_over_f2 = [n, square_root_n, n_squared, n_cube, n_log_n, n_squared_log_n_squared]
 
 for o in overall_availability_class:
