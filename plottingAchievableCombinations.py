@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-plt.rcParams.update({'font.size': 12})
+plt.rcParams.update({'font.size': 16})
 
 
 def function_filter(df, func):
@@ -36,20 +36,26 @@ overall_5_and_HW_6_filtered = overallClass5_filtered[isHW_6]
 f1_over_f2 = ['identity', 'n', 'square_root_n', 'n_squared', 'n_log_n']
 plots = [overall_4_and_HW_5_filtered, overall_4_and_HW_6_filtered, overall_5_and_HW_6_filtered]
 plots_ylabel = ['4 with HW availability class 5', '4 with HW availability class 6', '5 with HW availability class 6']
-plt.figure(figsize=(20, 10))
+# plt.figure(figsize=(20, 10))
 
 availability_class_hw = [0.9999, 0.99999, 0.999999]
 
 for p in range(len(plots)):
-    plt.subplot(2, 2, p+1)
+    plt.figure(figsize=(20, 10))
+    # plt.subplot(2, 2, p+1)
     plt.title('Target MSA System availability '+plots_ylabel[p])
     plt.xlabel('Number of nodes')
     plt.ylabel('Minimum SW availability class required')
-    for f in f1_over_f2:
+    # for f in f1_over_f2[0]:
+    f = 'identity'
+    print(f)
+    filteredData_by_function = function_filter(plots[p], f)
+    plt.plot(filteredData_by_function['nodes count'],
+             filteredData_by_function['minimum availability class SW required cts'], label=f,linestyle='dashed')
+    for f in f1_over_f2[1:5]:
         filteredData_by_function = function_filter(plots[p], f)
-        print(filteredData_by_function)
         plt.plot(filteredData_by_function['nodes count'],
                  filteredData_by_function['minimum availability class SW required cts'], label=f)
-    plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
+    # plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
     plt.legend()
-plt.show()
+    plt.savefig('Target SW avail class vs nodes for diff functions/'+plots_ylabel[p])
