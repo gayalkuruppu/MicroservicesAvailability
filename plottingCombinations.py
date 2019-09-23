@@ -2,6 +2,7 @@ import math
 import pandas as pd
 import itertools
 import matplotlib.pyplot as plt
+import avail
 
 
 def mttf_sw(a_sw, mttr_sw):
@@ -109,7 +110,7 @@ for i in itertools.product(nodes_count, availabilityClassHW, availabilityClassSW
 
     overallAvailability = availMicroHW_N_nodes * availMicroSW_N_nodes
 
-    overallAvailabilityClass = availability_class(overallAvailability)
+    overallAvailabilityClass = avail.availability_class_cts(overallAvailability)
     data.append([nodes_count, availability_class_hw, availability_class_sw, mttr_sw, f1.__name__,
                  f2.__name__, overallAvailabilityClass])
 

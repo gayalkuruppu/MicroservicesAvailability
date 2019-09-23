@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+plt.rcParams.update({'font.size': 12})
+
 
 def function_filter(df, func):
     is_function = df['f1(n) / f2(n)'] == func
@@ -31,20 +33,23 @@ isHW_6 = overallClass5_filtered['availability class HW'] == 6
 overall_5_and_HW_6_filtered = overallClass5_filtered[isHW_6]
 
 
-f1_over_f2 = ['n', 'square_root_n', 'n_squared', 'n_cube', 'n_log_n', 'n_squared_log_n_squared']
+f1_over_f2 = ['identity', 'n', 'square_root_n', 'n_squared', 'n_log_n']
 plots = [overall_4_and_HW_5_filtered, overall_4_and_HW_6_filtered, overall_5_and_HW_6_filtered]
-plots_ylabel = ['overall class of 4 with HW 5', 'overall class of 4 with HW 6', 'overall class of 5 with HW 6']
+plots_ylabel = ['4 with HW availability class 5', '4 with HW availability class 6', '5 with HW availability class 6']
 plt.figure(figsize=(20, 10))
+
+availability_class_hw = [0.9999, 0.99999, 0.999999]
 
 for p in range(len(plots)):
     plt.subplot(2, 2, p+1)
-    plt.title(plots_ylabel[p])
-    plt.xlabel('Concurrency')
-    plt.ylabel('minimum SW class required')
+    plt.title('Target MSA System availability '+plots_ylabel[p])
+    plt.xlabel('Number of nodes')
+    plt.ylabel('Minimum SW availability class required')
     for f in f1_over_f2:
         filteredData_by_function = function_filter(plots[p], f)
         print(filteredData_by_function)
         plt.plot(filteredData_by_function['nodes count'],
-                 filteredData_by_function['minimum availability class SW required'], label=f)
+                 filteredData_by_function['minimum availability class SW required cts'], label=f)
+    plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
     plt.legend()
 plt.show()
