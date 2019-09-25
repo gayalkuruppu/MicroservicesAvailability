@@ -50,6 +50,6 @@ for p in range(len(plots)):
         print(filteredData_by_function)
         plt.plot(filteredData_by_function['nodes count'],
                  filteredData_by_function['minimum availability class SW required cts'], label=f)
-    plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
+    # plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
     plt.legend()
 plt.show()
