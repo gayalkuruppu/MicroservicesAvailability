@@ -31,14 +31,14 @@ for i in availabilityClassHW:
         plt.title('Hardware Availability class '+str(i)+' and Software Availability class '+str(j))
         plt.xlabel('Number of nodes')
         plt.ylabel('Overall Availability class')
-        for f in functions:
-            f_name = f.__name__
-            hw_sw_f = hw_sw[hw_sw['failure function'] == f_name]
-            # print(hw_f)
-            # break
-            plt.plot(hw_sw_f['nodes count'], hw_sw_f['Overall availability'], label=f_name)
+        # for f in functions:
+        #     f_name = f.__name__
+        #     hw_sw_f = hw_sw[hw_sw['failure function'] == f_name]
+        #     # print(hw_f)
+        #     # break
+        #     plt.plot(hw_sw_f['nodes count'], hw_sw_f['Overall availability'], label=f_name)
         plt.plot(hw_sw['nodes count'], hw_sw['HW Availability'], label='HW upper bound', linestyle='dashed')
         plt.legend()
-        plt.savefig('HW_upperBound/'+'hw_'+str(i)+'_and_sw_'+str(j))
+        plt.savefig('hw_upperBoundOnly/'+'hw_'+str(i)+'_and_sw_'+str(j))
 
-df.to_csv('csv/hwUpperBoundData.csv')
+# df.to_csv('csv/hwUpperBoundData.csv')
