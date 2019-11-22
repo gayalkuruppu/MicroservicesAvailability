@@ -13,24 +13,17 @@ data = pd.read_csv('csv/positiveRatioFiltered.csv')
 
 #  filtering overall classes 4 and 5 from the positive ratio filtered csv file
 
-isOverallClass4 = data['overall availability class'] == 4
-overallClass4_filtered = data[isOverallClass4]
-
-isOverallClass5 = data['overall availability class'] == 5
-overallClass5_filtered = data[isOverallClass5]
+overallClass4_filtered = data[data['overall availability class'] == 4]
+overallClass5_filtered = data[data['overall availability class'] == 5]
 
 # filtering HW classes 5 and 6 for overall availability class 4
 
-isHW_5 = overallClass4_filtered['availability class HW'] == 5
-overall_4_and_HW_5_filtered = overallClass4_filtered[isHW_5]
-
-isHW_6 = overallClass4_filtered['availability class HW'] == 6
-overall_4_and_HW_6_filtered = overallClass4_filtered[isHW_6]
+overall_4_and_HW_5_filtered = overallClass4_filtered[overallClass4_filtered['availability class HW'] == 5]
+overall_4_and_HW_6_filtered = overallClass4_filtered[overallClass4_filtered['availability class HW'] == 5]
 
 # filtering HW class 6 for overall availability class 5
 
-isHW_6 = overallClass5_filtered['availability class HW'] == 6
-overall_5_and_HW_6_filtered = overallClass5_filtered[isHW_6]
+overall_5_and_HW_6_filtered = overallClass5_filtered[overallClass5_filtered['availability class HW'] == 6]
 
 
 f1_over_f2 = ['identity', 'n', 'square_root_n', 'n_squared', 'n_log_n']
