@@ -4,6 +4,21 @@ from avail import rf_to_avail
 import pandas as pd
 import math
 
+'''
+After we reduce the availability expression we got the variables count low
+(making some ratios instead of several variables).
+
+Then calculated the r/f ratio(and relevant sw availability class) needed to achieve certain 
+overall availabilities(micro-service based system's total availability).
+
+Some overall availabilities were not achievable due to the limitations of other variables. 
+For those cases we get negative r/f ratios. I filtered out those negative values and create a separate csv.
+
+some of the functions are commented out. We are now considering f1/f2 ratio instead of having them separately.
+ When anaylzing the function ratios there were some functions which shows almost similar behaviours.
+
+'''
+
 
 def identity(x):
     return 1
@@ -23,7 +38,7 @@ def n_squared(x):
 
 # def n_cube(x):
 #     return pow(x, 3)
-#
+
 
 def n_log_n(x):
     return x*math.log10(x)
@@ -53,6 +68,6 @@ df = pd.DataFrame(data, columns=['overall availability class', 'nodes count', 'a
 isMinPositive = df['minimum recover/failure time ratio'] >= 0
 positiveRatioFiltered = df[isMinPositive]
 
-df.to_csv('csv/allCombinations.csv')
-positiveRatioFiltered.to_csv('csv/positiveRatioFiltered.csv')
+df.to_csv('Data/csv/allCombinations.csv')
+positiveRatioFiltered.to_csv('Data/csv/positiveRatioFiltered.csv')
 print(positiveRatioFiltered)

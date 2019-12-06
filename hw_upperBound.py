@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import avail
 import func
 
+'''
+
+This code gives hardware upper bound plots for each given HW and SW availability class combination. 
+Now this uses the reduced variables case where we do not have much combinations as earlier.
+
+'''
 data = []
 
 nodes_count = list(range(2, 128))
@@ -39,6 +45,6 @@ for i in availabilityClassHW:
         #     plt.plot(hw_sw_f['nodes count'], hw_sw_f['Overall availability'], label=f_name)
         plt.plot(hw_sw['nodes count'], hw_sw['HW Availability'], label='HW upper bound', linestyle='dashed')
         plt.legend()
-        plt.savefig('hw_upperBoundOnly/'+'hw_'+str(i)+'_and_sw_'+str(j))
+        plt.savefig('Graphs/hw_upperBoundOnly/'+'hw_'+str(i)+'_and_sw_'+str(j))
 
-# df.to_csv('csv/hwUpperBoundData.csv')
+# df.to_csv('Data/csv/hwUpperBoundData.csv')

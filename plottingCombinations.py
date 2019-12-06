@@ -4,6 +4,23 @@ import itertools
 import matplotlib.pyplot as plt
 import avail
 
+'''
+
+*This code is used to generate(plot) availability data for different combinations of following VARIABLES,
+
+1. number of nodes(=micro services) we break the monolith into
+2. Hardware availability class
+3. Software availability class
+4. Mean time to recover fo software(only software because we do not change the MTTF or MTTR for hardware)
+5. Factor which MTTF changes when we divide the system in to micro-services as a function of nodes
+6. Factor which MTTR changes when we divide the system in to micro-services as a function of nodes. (basically the 
+    reciprocals of the functions which were used in 5.)
+
+*max_plot is used to calculate and plot upper bound for availability values we just calculated now.
+
+PS - max_plot is executed in line 174
+
+'''
 
 def mttf_sw(a_sw, mttr_sw):
     return a_sw * mttr_sw / (1 - a_sw)
@@ -119,32 +136,40 @@ for i in itertools.product(nodes_count, availabilityClassHW, availabilityClassSW
 df = pd.DataFrame(data, columns=['nodes count', 'HW Availability', 'SW Availability', 'MTTR SW', 'function 1',
                                  'function 2', 'Overall availability'])
 
-df.to_csv('AvailabilityS.csv')
+df.to_csv('Data/AvailabilityS.csv')
 
 
-for i in function1:
-    # filtering the data by a selected function1
-    isfunction1_identity = df['function 1'] == i.__name__
-    filtered_data = df[isfunction1_identity]
-    plt.figure(figsize=(20, 10))  # creating a figure for the specific function1
-    plt.suptitle('Maximum availability class(fixing {}) for HW classes {} and SW classes {}'.
-                 format(i.__name__, availabilityClassHW, availabilityClassSW), fontsize=16)
-    subplot_iteration = 0
-    for j in function2:
-        subplot_iteration += 1
-        # filtering the data by a selected function2
-        isfunction2_j = filtered_data['function 2'] == j.__name__
-        function2_filtered = filtered_data[isfunction2_j]
-        plt.subplot(2, 3, subplot_iteration)  # plotting a subplots for chosen function2
-        plt.title(i.__name__ + ' and ' + j.__name__)
-        plt.xlabel('Nodes count')
-        plt.ylabel('maximum overall availability class')
-        for k in nodes_count:
-            # filtering the data by specific number of nodes count
-            isNodes_count = function2_filtered['nodes count'] == k
-            nodes_count_filtered = function2_filtered[isNodes_count]
-            # finding the maximum overall availability class from the filtered data.
-            # filtered by specific f1,f2, and node_count
-            maxAvailabilityClass = nodes_count_filtered['Overall availability'].max()
-            plt.plot(k, maxAvailabilityClass, 'bo')
-    plt.savefig('maxPlots/'+i.__name__)
+def max_plot():
+    '''
+    this function
+    '''
+    nodes = [2, 4, 8, 16, 24, 32, 64, 128]
+    for i in function1:
+        # filtering the data by a selected function1
+        isfunction1_identity = df['function 1'] == i.__name__
+        filtered_data = df[isfunction1_identity]
+        plt.figure(figsize=(20, 10))  # creating a figure for the specific function1
+        plt.suptitle('Maximum availability class(fixing {}) for HW classes {} and SW classes {}'.
+                     format(i.__name__, availabilityClassHW, availabilityClassSW), fontsize=16)
+        subplot_iteration = 0
+        for j in function2:
+            subplot_iteration += 1
+            # filtering the data by a selected function2
+            isfunction2_j = filtered_data['function 2'] == j.__name__
+            function2_filtered = filtered_data[isfunction2_j]
+            plt.subplot(2, 3, subplot_iteration)  # plotting a subplots for chosen function2
+            plt.title(i.__name__ + ' and ' + j.__name__)
+            plt.xlabel('Nodes count')
+            plt.ylabel('maximum overall availability class')
+            for k in nodes:
+                # filtering the data by specific number of nodes count
+                isNodes_count = function2_filtered['nodes count'] == k
+                nodes_count_filtered = function2_filtered[isNodes_count]
+                # finding the maximum overall availability class from the filtered data.
+                # filtered by specific f1,f2, and node_count
+                maxAvailabilityClass = nodes_count_filtered['Overall availability'].max()
+                plt.plot(k, maxAvailabilityClass, 'bo')
+        plt.savefig('Graphs/maxPlots/'+i.__name__)
+
+
+max_plot()

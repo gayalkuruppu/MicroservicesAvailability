@@ -1,7 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
 plt.rcParams.update({'font.size': 16})
+
+'''
+
+In this code we draw plots for reduced variables combinations we generatdd
+
+'''
 
 
 def function_filter(df, func):
@@ -9,7 +14,7 @@ def function_filter(df, func):
     return df[is_function]
 
 
-data = pd.read_csv('csv/positiveRatioFiltered.csv')
+data = pd.read_csv('Data/csv/positiveRatioFiltered.csv')
 
 #  filtering overall classes 4 and 5 from the positive ratio filtered csv file
 
@@ -49,6 +54,7 @@ for p in range(len(plots)):
         filteredData_by_function = function_filter(plots[p], f)
         plt.plot(filteredData_by_function['nodes count'],
                  filteredData_by_function['minimum availability class SW required cts'], label=f)
-    # plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p], filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
+    # plt.plot(filteredData_by_function['nodes count'], pow(availability_class_hw[p],
+    # filteredData_by_function['nodes count']), label='software availability = 1', linestyle=':')
     plt.legend()
-    plt.savefig('Target SW avail class vs nodes for diff functions/'+plots_ylabel[p])
+    plt.savefig('Graphs/Target SW avail class vs nodes for diff functions/'+plots_ylabel[p])
